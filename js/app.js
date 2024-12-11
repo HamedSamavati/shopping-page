@@ -16,11 +16,10 @@ const searchNameHandler = (event) => {
       : (product.style.display = "none");
   });
 };
-searchNameInput.addEventListener("keyup", searchNameHandler);
 
 const searchPriceHandler = (event) => {
   const searchPriceInput = document.querySelector("#search-price-input");
-  const searchedPrice = searchPriceInput.value;
+  const searchedPrice = event.target.previousElementSibling.value;
   searchPriceInput.value = "";
   products.forEach((product) => {
     if (searchedPrice === "") product.style.display = "";
@@ -32,7 +31,6 @@ const searchPriceHandler = (event) => {
     }
   });
 };
-searchBtn.addEventListener("click", searchPriceHandler);
 
 const deactivateBtns = (selfBtn) => {
   btns.forEach((btn) => {
@@ -63,6 +61,11 @@ const filterHandler = (event) => {
     : showRelatedProducts(filter);
 };
 
-btns.forEach((btn) => {
-  btn.addEventListener("click", filterHandler);
-});
+const start = () => {
+  btns.forEach((btn) => {
+    btn.addEventListener("click", filterHandler);
+  });
+  searchNameInput.addEventListener("keyup", searchNameHandler);
+  searchBtn.addEventListener("click", searchPriceHandler);
+};
+window.addEventListener("load", start);
