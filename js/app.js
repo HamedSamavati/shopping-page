@@ -7,20 +7,12 @@ const clothingBtn = document.querySelector("#clothing-btn");
 const healthBtn = document.querySelector("#health-btn");
 const btns = [allBtn, techBtn, healthBtn, clothingBtn];
 
-const deactivateBtns = (selfBtn) => {
-  btns.forEach((btn) => {
-    if (btn.classList.contains("active") || btn === selfBtn) {
-      btn.classList.toggle("active");
-    }
-  });
-};
-
 const searchNameHandler = (event) => {
   const name = event.target.value.toLowerCase().trim();
   products.forEach((product) => {
     const productName = product.children[1].innerText.toLowerCase();
-    if (!productName.includes(name)) product.style.display = "none";
-    else product.style.display = "";
+    if (productName.includes(name)) product.style.display = "";
+    else product.style.display = "none";
   });
 };
 searchNameInput.addEventListener("keyup", searchNameHandler);
@@ -43,13 +35,13 @@ const searchPriceHandler = (event) => {
 };
 searchBtn.addEventListener("click", searchPriceHandler);
 
-const allHandler = (event) => {
-  deactivateBtns(allBtn);
-  products.forEach((product) => {
-    if (allBtn.classList.contains("active")) product.style.display = "";
+const deactivateBtns = (selfBtn) => {
+  btns.forEach((btn) => {
+    if (btn.classList.contains("active") || btn === selfBtn) {
+      btn.classList.toggle("active");
+    }
   });
 };
-allBtn.addEventListener("click", allHandler);
 
 const showRelatedProducts = (btn) => {
   products.forEach((product) => {
@@ -64,20 +56,14 @@ const showRelatedProducts = (btn) => {
   });
 };
 
-const techHandler = (event) => {
-  deactivateBtns(techBtn);
-  showRelatedProducts(techBtn);
+const filterHandler = (event) => {
+  const filter = event.target;
+  deactivateBtns(filter);
+  if (filter === allBtn && allBtn.classList.contains("active")) {
+    products.forEach((product) => (product.style.display = ""));
+  } else showRelatedProducts(filter);
 };
-techBtn.addEventListener("click", techHandler);
 
-const clothingHandler = (event) => {
-  deactivateBtns(clothingBtn);
-  showRelatedProducts(clothingBtn);
-};
-clothingBtn.addEventListener("click", clothingHandler);
-
-const healthHandler = () => {
-  deactivateBtns(healthBtn);
-  showRelatedProducts(healthBtn);
-};
-healthBtn.addEventListener("click", healthHandler);
+btns.forEach((btn) => {
+  btn.addEventListener("click", filterHandler);
+});
