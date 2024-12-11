@@ -11,8 +11,9 @@ const searchNameHandler = (event) => {
   const name = event.target.value.toLowerCase().trim();
   products.forEach((product) => {
     const productName = product.children[1].innerText.toLowerCase();
-    if (productName.includes(name)) product.style.display = "";
-    else product.style.display = "none";
+    productName.includes(name)
+      ? (product.style.display = "")
+      : (product.style.display = "none");
   });
 };
 searchNameInput.addEventListener("keyup", searchNameHandler);
@@ -24,12 +25,10 @@ const searchPriceHandler = (event) => {
   products.forEach((product) => {
     if (searchedPrice === "") product.style.display = "";
     else {
-      if (
-        +product.children[2].lastChild.data === +searchedPrice &&
-        product.style.display !== "none"
-      )
-        product.style.display = "";
-      else product.style.display = "none";
+      +product.children[2].lastChild.data === +searchedPrice &&
+      product.style.display !== "none"
+        ? (product.style.display = "")
+        : (product.style.display = "none");
     }
   });
 };
@@ -46,9 +45,9 @@ const deactivateBtns = (selfBtn) => {
 const showRelatedProducts = (btn) => {
   products.forEach((product) => {
     if (btn.classList.contains("active")) {
-      if (product.dataset.category === btn.dataset.category)
-        product.style.display = "";
-      else product.style.display = "none";
+      product.dataset.category === btn.dataset.category
+        ? (product.style.display = "")
+        : (product.style.display = "none");
     } else {
       if (product.dataset.category !== btn.dataset.category)
         product.style.display = "";
@@ -59,9 +58,9 @@ const showRelatedProducts = (btn) => {
 const filterHandler = (event) => {
   const filter = event.target;
   deactivateBtns(filter);
-  if (filter === allBtn && allBtn.classList.contains("active")) {
-    products.forEach((product) => (product.style.display = ""));
-  } else showRelatedProducts(filter);
+  filter === allBtn && allBtn.classList.contains("active")
+    ? products.forEach((product) => (product.style.display = ""))
+    : showRelatedProducts(filter);
 };
 
 btns.forEach((btn) => {

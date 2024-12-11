@@ -61,6 +61,7 @@ nav button:hover {
   border: 2px #023e8a solid;
   color: #023e8a;
   font-weight: 600;
+  cursor: pointer;
 }
 nav button.active {
   background: #ffffff;

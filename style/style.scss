@@ -64,6 +64,7 @@ nav {
       border: 2px $blue solid;
       color: $blue;
       font-weight: 600;
+      cursor: pointer;
     }
     &.active {
       background: $white;
